@@ -343,8 +343,21 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const arrow = new Map([
+    ['[', ']'],
+    ['{', '}'],
+    ['(', ')'],
+    ['<', '>']]);
+  const stack = [];
+  for (let i = 0; i < str.length; i += 1) {
+    if (arrow.get(stack[stack.length - 1]) === str[i]) {
+      stack.pop();
+    } else {
+      stack.push(str[i]);
+    }
+  }
+  return stack.length === 0;
 }
 
 
@@ -385,10 +398,19 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
-}
 
+function getCommonDirectoryPath(pathes) {
+  const arr = pathes.map((e) => e.split('/'));
+  let result = '';
+  for (let i = 0; i < arr[0].length; i += 1) {
+    const current = arr[0][i];
+    if (arr.every((e) => e[i] === current)) {
+      result += `${current}/`;
+    }
+  }
+
+  return result;
+}
 
 /**
  * Returns the product of two specified matrixes.
@@ -454,7 +476,39 @@ function getMatrixProduct(arr1, arr2) {
 function evaluateTicTacToePosition(/* position */) {
   throw new Error('Not implemented');
 }
+// function evaluateTicTacToePosition(position) {
+//   // const col = position[0].length;
 
+//   const d1 = [];
+//   const d2 = [];
+//   const arr = [];
+//   for (let i = 0; i < position.length; i += 1) {
+//     d1.push(position[i][i]);
+//     d2.push(position[i][position.length - 1 - i]);
+//   }
+
+//   if (([...new Set(d1)].length === 1)) {
+//     arr.push(d1);
+//   }
+//   if (([...new Set(d2)].length === 1)) {
+//     arr.push(d2);
+//   }
+
+//   position.forEach((e) => {
+//     if ([...new Set(e)].length === 1) {
+//       arr.push([...e]);
+//     }
+//   });
+
+//   const reverse = position.map((el, i) => el.map((el2, j) => position[j][i]));
+
+//   reverse.forEach((e) => {
+//     if ([...new Set(e)].length === 1) {
+//       arr.push([...e]);
+//     }
+//   });
+//   return arr[0][0];
+// }
 
 module.exports = {
   getFizzBuzz,
